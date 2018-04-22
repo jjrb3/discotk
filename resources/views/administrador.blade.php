@@ -37,7 +37,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="administrador.html">Inicio</a>
+        <a class="navbar-brand" href="administrador">Inicio</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -46,7 +46,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item text-white">
                     <a class="nav-link active">
-                        Bienvenido, Jeremy Reyes B.
+                        Bienvenido, {{$usuario}}.
                     </a>
                 </li>
                 <li class="nav-item">
@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ingresar.html">Salir</a>
+                    <a class="nav-link" href="salir">Salir</a>
                 </li>
             </ul>
         </div>
@@ -69,81 +69,62 @@
                 <div class="col-md-12 mb-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="input-group">
-                                <input type="text" class="form-control"
-                                       placeholder="Digite el nombre, fecha o valor del eventó que desee buscar...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="button">Buscar</button>
-                                    <a href="crear-editar.html">
+                            <form action="administrador" method="get">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="Digite el nombre, fecha o valor del eventó que desee buscar..."
+                                           name="busqueda"
+                                    >
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">Buscar</button>
+                                    <a href="crear-editar">
                                         <button class="btn btn-primary" type="button">
                                             Crear nuevo evento
                                         </button>
                                     </a>
                                 </span>
-                            </div>
+                                </div>
+                            </form>
                             <br>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-striped tablesorter">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-center">Nombre</th>
-                                        <th class="text-center">Fecha</th>
-                                        <th class="text-center">Valor</th>
-                                        <th class="text-center">Opciones</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Gran festival de vallenato</td>
-                                        <td align="center">2018-04-30</td>
-                                        <td align="center">$30.000</td>
-                                        <td width="15%" align="center">
-                                            <a href="ver-detalle.html">
-                                                <i class="fa fa-eye fa-2x iconos"></i>
-                                            </a>
-                                            <a href="crear-editar.html?id=1">
-                                                <i class="fa fa-pencil fa-2x iconos"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-trash fa-2x iconos"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gran festival de vallenato</td>
-                                        <td align="center">2018-04-30</td>
-                                        <td align="center">$30.000</td>
-                                        <td width="15%" align="center">
-                                            <a href="#" title="Ver detallever-detalle.html">
-                                                <i class="fa fa-eye fa-2x iconos"></i>
-                                            </a>
-                                            <a href="crear-editar.html?id=1" title="Editar evento">
-                                                <i class="fa fa-pencil fa-2x iconos"></i>
-                                            </a>
-                                            <a href="#" title="Eliminar evento">
-                                                <i class="fa fa-trash fa-2x iconos"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gran festival de vallenato</td>
-                                        <td align="center">2018-04-30</td>
-                                        <td align="center">$30.000</td>
-                                        <td width="15%" align="center">
-                                            <a href="ver-detalle.html">
-                                                <i class="fa fa-eye fa-2x iconos"></i>
-                                            </a>
-                                            <a href="crear-editar.html?id=1">
-                                                <i class="fa fa-pencil fa-2x iconos"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-trash fa-2x iconos"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            @if((int)$eventos->count())
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped tablesorter">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">Nombre</th>
+                                            <th class="text-center">Fecha</th>
+                                            <th class="text-center">Valor</th>
+                                            <th class="text-center">Opciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($eventos as $evento)
+                                        <tr>
+                                            <td>{{$evento->titulo}}</td>
+                                            <td align="center">{{$evento->fecha}}</td>
+                                            <td align="center">${{number_format($evento->valor)}}</td>
+                                            <td width="15%" align="center">
+                                                <a href="ver-detalle/?id={{$evento->id}}">
+                                                    <i class="fa fa-eye fa-2x iconos"></i>
+                                                </a>
+                                                <a href="crear-editar/?id={{$evento->id}}">
+                                                    <i class="fa fa-pencil fa-2x iconos"></i>
+                                                </a>
+                                                <a href="#" onclick="eliminar(parseInt({{$evento->id}}))">
+                                                    <i class="fa fa-trash fa-2x iconos"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @else
+                                <div class="alert alert-info text-center">
+                                    No se encontraron eventos...
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

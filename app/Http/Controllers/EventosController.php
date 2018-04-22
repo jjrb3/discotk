@@ -27,4 +27,16 @@ class EventosController
             'evento' => Eventos::find($request->get('id'))
         ]);
     }
+
+    public function AdminConsultarTodo(Request $request) {
+
+        if (!$request->session()->get('ingreso')) {
+            return redirect('inicio');
+        }
+
+        return view('administrador',[
+            'eventos' => Eventos::Consultar($request->get('busqueda')),
+            'usuario' => $request->session()->get('usuario')
+        ]);
+    }
 }

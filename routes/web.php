@@ -21,3 +21,10 @@ Route::get('/inicio/', function () {
 
 Route::get('/lista/', 'EventosController@Listado');
 Route::get('/detalle/', 'EventosController@DetalleUsuario');
+Route::get('/administrador', 'EventosController@AdminConsultarTodo');
+
+Route::get('/ingresar', 'UsuarioController@Ingresar');
+Route::get('/salir', 'UsuarioController@Salir');
+
+
+

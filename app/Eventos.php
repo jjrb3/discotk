@@ -20,6 +20,8 @@ class Eventos extends Model
                 )
                 ->get();
         } catch (\Exception $e) {
+
+            #echo $e->getMessage();die;
             return [];
         }
     }

@@ -52,28 +52,32 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 <div class="card h-100">
-                    <div class="card-body">
-                        <div class="form-group text-left" >
-                            <label style="color:#847592">
-                                <i class="fa fa-user size-16" aria-hidden="true"></i> Usuario
-                            </label>
-                            <input type="text" class="form-control" id="usuario" placeholder="Ingresar usuario..." maxlength="30" onkeyup="Api.Ingresar.enter(event)">
-                        </div>
-                        <div class="form-group text-left" >
-                            <label style="color:#847592">
-                                <i class="fa fa-key size-16" aria-hidden="true"></i> Contraseña
-                            </label>
-                            <div class="input-group" id="grupo-clave">
-                                <input type="password" class="form-control" id="clave" placeholder="Ingresar contraseña..." maxlength="30" onkeyup="Api.Ingresar.enter(event)">
-                                <span class="input-group-addon apuntar" onclick="Api.Herramientas.mostrarInput('#grupo-clave',true)">
-									<i class="fa fa-eye size-20" aria-hidden="true"></i>
-								</span>
+                    <form action="ingresar" method="get">
+                        <div class="card-body">
+                            <div class="form-group text-left">
+                                <label style="color:#847592">
+                                    <i class="fa fa-user size-16" aria-hidden="true"></i> Usuario
+                                </label>
+                                <input type="text" class="form-control" name="usuario"
+                                       placeholder="Ingresar usuario...">
                             </div>
+                            <div class="form-group text-left">
+                                <label style="color:#847592">
+                                    <i class="fa fa-key size-16" aria-hidden="true"></i> Contraseña
+                                </label>
+                                <input type="password" class="form-control" name="clave"
+                                       placeholder="Ingresar contraseña...">
+                            </div>
+                            @if($mensaje)
+                                <div class="alert alert-danger text-center">
+                                    {{$mensaje}}
+                                </div>
+                            @endif
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <a class="btn btn-primary" href="administrador.html">Ingresar</a>
-                    </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" type="submit">Ingresar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-md-4"></div>
