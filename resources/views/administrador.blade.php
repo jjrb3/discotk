@@ -78,7 +78,7 @@
                                     >
                                     <span class="input-group-btn">
                                     <button class="btn btn-primary" type="submit">Buscar</button>
-                                    <a href="crear-editar">
+                                    <a href="crear-editar/">
                                         <button class="btn btn-primary" type="button">
                                             Crear nuevo evento
                                         </button>

@@ -37,7 +37,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="administrador.html">Inicio</a>
+        <a class="navbar-brand" href="administrador">Inicio</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="ingresar.html">Salir</a>
+                    <a class="nav-link" href="salir">Salir</a>
                 </li>
             </ul>
         </div>
@@ -68,151 +68,183 @@
             <div class="row">
                 <div class="col-md-12 mb-12">
                     <div class="card">
-                        <div class="card-body">
-                            <h2 align="center">Crear evento</h2>
-                            <br>
-                            <div class="row">
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Imagen.
-                                    </label>
-                                    <input type="file" class="form-control" name="imagen">
-                                </div>
-                                <div class="col-lg-4 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Título.
-                                    </label>
-                                    <input type="text" class="form-control" name="titulo" placeholder="Digite un titulo..." maxlength="50">
-                                </div>
-                                <div class="col-lg-5 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Breve descripción.
-                                    </label>
-                                    <input type="text" class="form-control" name="breve_descripcion" placeholder="Digite una breve descripcion..." maxlength="150">
-                                </div>
+                        <form action="guardar-crear-editar" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id" value="{{$id}}">
+                            <div class="card-body">
+                                <h2 align="center">
+                                    @if($id)
+                                        Actualizar evento
+                                    @else
+                                        Crear evento
+                                    @endif
+                                </h2>
+                                <br>
+                                @if($mensaje)
+                                    <div class="alert alert-warning text-center">
+                                        {{$mensaje}}
+                                    </div>
+                                @endif
+                                <div class="row">
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Imagen.
+                                        </label>
+                                        <input type="file" class="form-control" name="imagen">
+                                    </div>
+                                    <div class="col-lg-4 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Título.
+                                        </label>
+                                        <input type="text" class="form-control" name="titulo"
+                                               placeholder="Digite un titulo..." maxlength="50"
+                                               value="{{$evento->titulo}}" required>
+                                    </div>
+                                    <div class="col-lg-5 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Breve descripción.
+                                        </label>
+                                        <input type="text" class="form-control" name="breve_descripcion"
+                                               value="{{$evento->breve_descripcion}}"
+                                               placeholder="Digite una breve descripcion..." maxlength="150" required>
+                                    </div>
 
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Calificación.
-                                    </label>
-                                    <select class="form-control" name="calificacion">
-                                        <option value="1">1 Estrella</option>
-                                        <option value="2">2 Estrella</option>
-                                        <option value="3">3 Estrella</option>
-                                        <option value="4">4 Estrella</option>
-                                        <option value="5">5 Estrella</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Valor.
-                                    </label>
-                                    <input type="text" class="form-control" name="valor" placeholder="Digite el valor..." maxlength="10">
-                                </div>
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Url Facebook.
-                                    </label>
-                                    <input type="text" class="form-control" name="facebook" placeholder="Digite la url de facebook..." maxlength="200">
-                                </div>
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Url Instagram.
-                                    </label>
-                                    <input type="text" class="form-control" name="instagram" placeholder="Digite la url de instagram..." maxlength="200">
-                                </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Calificación.
+                                        </label>
+                                        <select class="form-control" name="calificacion" id="calificacion">
+                                            <option value="1">1 Estrella</option>
+                                            <option value="2">2 Estrella</option>
+                                            <option value="3">3 Estrella</option>
+                                            <option value="4">4 Estrella</option>
+                                            <option value="5">5 Estrella</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Valor.
+                                        </label>
+                                        <input type="text" class="form-control" name="valor" value="{{$evento->valor}}"
+                                               placeholder="Digite el valor..." maxlength="10">
+                                    </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Url Facebook.
+                                        </label>
+                                        <input type="text" class="form-control" name="facebook"
+                                               value="{{$evento->facebook}}"
+                                               placeholder="Digite la url de facebook..." maxlength="200">
+                                    </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Url Instagram.
+                                        </label>
+                                        <input type="text" class="form-control" name="instagram"
+                                               value="{{$evento->instagram}}"
+                                               placeholder="Digite la url de instagram..." maxlength="200">
+                                    </div>
 
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Fecha.
-                                    </label>
-                                    <input type="date" class="form-control" name="fecha" placeholder="aaaa-mm-dd" maxlength="10">
-                                </div>
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Horario de ingreso.
-                                    </label>
-                                    <select class="form-control" name="ingreso">
-                                        <option value='00:00 AM'>00:00 AM</option>
-                                        <option value='01:00 AM'>01:00 AM</option>
-                                        <option value='02:00 AM'>02:00 AM</option>
-                                        <option value='03:00 AM'>03:00 AM</option>
-                                        <option value='04:00 AM'>04:00 AM</option>
-                                        <option value='05:00 AM'>05:00 AM</option>
-                                        <option value='06:00 AM'>06:00 AM</option>
-                                        <option value='07:00 AM'>07:00 AM</option>
-                                        <option value='08:00 AM'>08:00 AM</option>
-                                        <option value='09:00 AM'>09:00 AM</option>
-                                        <option value='10:00 AM'>10:00 AM</option>
-                                        <option value='11:00 AM'>11:00 AM</option>
-                                        <option value='12:00 PM'>12:00 PM</option>
-                                        <option value='01:00 PM'>01:00 PM</option>
-                                        <option value='02:00 PM'>02:00 PM</option>
-                                        <option value='03:00 PM'>03:00 PM</option>
-                                        <option value='04:00 PM'>04:00 PM</option>
-                                        <option value='05:00 PM'>05:00 PM</option>
-                                        <option value='06:00 PM'>06:00 PM</option>
-                                        <option value='07:00 PM'>07:00 PM</option>
-                                        <option value='08:00 PM'>08:00 PM</option>
-                                        <option value='09:00 PM'>09:00 PM</option>
-                                        <option value='10:00 PM'>10:00 PM</option>
-                                        <option value='11:00 PM'>11:00 PM</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Horario de salida.
-                                    </label>
-                                    <select class="form-control" name="salida">
-                                        <option value='00:00 AM'>00:00 AM</option>
-                                        <option value='01:00 AM'>01:00 AM</option>
-                                        <option value='02:00 AM'>02:00 AM</option>
-                                        <option value='03:00 AM'>03:00 AM</option>
-                                        <option value='04:00 AM'>04:00 AM</option>
-                                        <option value='05:00 AM'>05:00 AM</option>
-                                        <option value='06:00 AM'>06:00 AM</option>
-                                        <option value='07:00 AM'>07:00 AM</option>
-                                        <option value='08:00 AM'>08:00 AM</option>
-                                        <option value='09:00 AM'>09:00 AM</option>
-                                        <option value='10:00 AM'>10:00 AM</option>
-                                        <option value='11:00 AM'>11:00 AM</option>
-                                        <option value='12:00 PM'>12:00 PM</option>
-                                        <option value='01:00 PM'>01:00 PM</option>
-                                        <option value='02:00 PM'>02:00 PM</option>
-                                        <option value='03:00 PM'>03:00 PM</option>
-                                        <option value='04:00 PM'>04:00 PM</option>
-                                        <option value='05:00 PM'>05:00 PM</option>
-                                        <option value='06:00 PM'>06:00 PM</option>
-                                        <option value='07:00 PM'>07:00 PM</option>
-                                        <option value='08:00 PM'>08:00 PM</option>
-                                        <option value='09:00 PM'>09:00 PM</option>
-                                        <option value='10:00 PM'>10:00 PM</option>
-                                        <option value='11:00 PM'>11:00 PM</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-3 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Dirección.
-                                    </label>
-                                    <input type="text" class="form-control" name="direccion" placeholder="Digite la dirección..." maxlength="50">
-                                </div>
-                                <div class="col-lg-6 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Descripción.
-                                    </label>
-                                    <textarea class="form-control" name="descripcion" placeholder="Digite la descripción..." rows="10"></textarea>
-                                </div>
-                                <div class="col-lg-6 form-group text-left">
-                                    <label style="color:#585858; font-weight: 700">
-                                        Observaciones.
-                                    </label>
-                                    <textarea class="form-control" name="observaciones" placeholder="Digite una breve observación..." rows="10"></textarea>
-                                </div>
-                                <div class="col-lg-12 text-center">
-                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Fecha.
+                                        </label>
+                                        <input type="date" class="form-control" name="fecha" placeholder="aaaa-mm-dd"
+                                               required
+                                               maxlength="10" value="{{$evento->fecha}}">
+                                    </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Horario de ingreso.
+                                        </label>
+                                        <select class="form-control" name="ingreso" id="ingreso">
+                                            <option value='00:00 AM'>00:00 AM</option>
+                                            <option value='01:00 AM'>01:00 AM</option>
+                                            <option value='02:00 AM'>02:00 AM</option>
+                                            <option value='03:00 AM'>03:00 AM</option>
+                                            <option value='04:00 AM'>04:00 AM</option>
+                                            <option value='05:00 AM'>05:00 AM</option>
+                                            <option value='06:00 AM'>06:00 AM</option>
+                                            <option value='07:00 AM'>07:00 AM</option>
+                                            <option value='08:00 AM'>08:00 AM</option>
+                                            <option value='09:00 AM'>09:00 AM</option>
+                                            <option value='10:00 AM'>10:00 AM</option>
+                                            <option value='11:00 AM'>11:00 AM</option>
+                                            <option value='12:00 PM'>12:00 PM</option>
+                                            <option value='01:00 PM'>01:00 PM</option>
+                                            <option value='02:00 PM'>02:00 PM</option>
+                                            <option value='03:00 PM'>03:00 PM</option>
+                                            <option value='04:00 PM'>04:00 PM</option>
+                                            <option value='05:00 PM'>05:00 PM</option>
+                                            <option value='06:00 PM'>06:00 PM</option>
+                                            <option value='07:00 PM'>07:00 PM</option>
+                                            <option value='08:00 PM'>08:00 PM</option>
+                                            <option value='09:00 PM'>09:00 PM</option>
+                                            <option value='10:00 PM'>10:00 PM</option>
+                                            <option value='11:00 PM'>11:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Horario de salida.
+                                        </label>
+                                        <select class="form-control" name="salida" id="salida">
+                                            <option value='00:00 AM'>00:00 AM</option>
+                                            <option value='01:00 AM'>01:00 AM</option>
+                                            <option value='02:00 AM'>02:00 AM</option>
+                                            <option value='03:00 AM'>03:00 AM</option>
+                                            <option value='04:00 AM'>04:00 AM</option>
+                                            <option value='05:00 AM'>05:00 AM</option>
+                                            <option value='06:00 AM'>06:00 AM</option>
+                                            <option value='07:00 AM'>07:00 AM</option>
+                                            <option value='08:00 AM'>08:00 AM</option>
+                                            <option value='09:00 AM'>09:00 AM</option>
+                                            <option value='10:00 AM'>10:00 AM</option>
+                                            <option value='11:00 AM'>11:00 AM</option>
+                                            <option value='12:00 PM'>12:00 PM</option>
+                                            <option value='01:00 PM'>01:00 PM</option>
+                                            <option value='02:00 PM'>02:00 PM</option>
+                                            <option value='03:00 PM'>03:00 PM</option>
+                                            <option value='04:00 PM'>04:00 PM</option>
+                                            <option value='05:00 PM'>05:00 PM</option>
+                                            <option value='06:00 PM'>06:00 PM</option>
+                                            <option value='07:00 PM'>07:00 PM</option>
+                                            <option value='08:00 PM'>08:00 PM</option>
+                                            <option value='09:00 PM'>09:00 PM</option>
+                                            <option value='10:00 PM'>10:00 PM</option>
+                                            <option value='11:00 PM'>11:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Dirección.
+                                        </label>
+                                        <input type="text" class="form-control" name="direccion"
+                                               value="{{$evento->direccion}}"
+                                               placeholder="Digite la dirección..." maxlength="50">
+                                    </div>
+                                    <div class="col-lg-6 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Descripción.
+                                        </label>
+                                        <textarea class="form-control" name="descripcion"
+                                                  placeholder="Digite la descripción..." rows="10"
+                                                  required>{{$evento->descripcion}}</textarea>
+                                    </div>
+                                    <div class="col-lg-6 form-group text-left">
+                                        <label style="color:#585858; font-weight: 700">
+                                            Observaciones.
+                                        </label>
+                                        <textarea class="form-control" name="observaciones"
+                                                  placeholder="Digite una breve observación..."
+                                                  rows="10">{{$evento->observaciones}}</textarea>
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -235,6 +267,15 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+@if($id)
+    <script>
+        $(document).ready(function () {
+            $('#calificacion').val('{{$evento->calificacion}}');
+            $('#ingreso').val('{{$evento->ingreso}}');
+            $('#salida').val('{{$evento->salida}}');
+        });
+    </script>
+@endif
 </body>
 
 </html>
