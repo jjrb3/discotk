@@ -148,6 +148,13 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<script>
+    function eliminar(id) {
+        if(confirm('Esta seguro que desea eliminar este evento?')) {
+            location.assign('eliminar/?id=' + id);
+        }
+    }
+</script>
 </body>
 
 </html>

@@ -25,6 +25,7 @@ Route::get('/ver-detalle/', 'EventosController@Detalle');
 Route::get('/administrador', 'EventosController@AdminConsultarTodo');
 Route::get('/crear-editar/', 'EventosController@AdminCrearEditar');
 Route::post('/guardar-crear-editar', 'EventosController@AdminGuardarCrearEditar');
+Route::get('/eliminar/', 'EventosController@AdminEliminar');
 
 Route::get('/ingresar', 'UsuarioController@Ingresar');
 Route::get('/salir', 'UsuarioController@Salir');

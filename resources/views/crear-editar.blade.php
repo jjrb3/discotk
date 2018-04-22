@@ -46,7 +46,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item text-white">
                     <a class="nav-link active">
-                        Bienvenido, Jeremy Reyes B.
+                        Bienvenido, {{$usuario}}.
                     </a>
                 </li>
                 <li class="nav-item">

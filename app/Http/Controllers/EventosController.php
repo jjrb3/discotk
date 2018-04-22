@@ -31,7 +31,8 @@ class EventosController
     public function Detalle(Request $request) {
 
         return view('ver-detalle',[
-            'evento' => Eventos::find($request->get('id'))
+            'evento' => Eventos::find($request->get('id')),
+            'usuario' => $request->session()->get('usuario')
         ]);
     }
 
@@ -65,7 +66,8 @@ class EventosController
         return view('crear-editar',[
             'evento' => $evento,
             'id' => $id,
-            'mensaje' => ''
+            'mensaje' => '',
+            'usuario' => $request->session()->get('usuario')
         ]);
     }
 
@@ -143,5 +145,16 @@ class EventosController
         }
 
         return;
+    }
+
+    public function AdminEliminar(Request $request) {
+
+        $eventos = Eventos::find($request->get('id'));
+
+        $eventos->estado = '-1';
+
+        $eventos->save();
+
+        return redirect('administrador');
     }
 }
