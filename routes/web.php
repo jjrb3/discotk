@@ -12,5 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
+
+Route::get('/inicio/', function () {
+    return view('inicio');
+});
+
+Route::get('/lista/', 'EventosController@Listado');
+Route::get('/detalle/', 'EventosController@DetalleUsuario');
